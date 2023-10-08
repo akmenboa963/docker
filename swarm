@@ -1,0 +1,46 @@
+#!/bin/bash
+apt-get update -y
+curl -fsSL https://get.docker.com -o get-docker.sh
+sh get-docker.sh
+
+chmod 600 ecoproject.pem
+
+cd .ssh
+touch config
+
+vim config
+
+
+Host xexconsultancynode2
+HostName 18.207.191.114
+User ubuntu
+IdentityFile /root/.ssh/ecoproject.pem
+
+Host xexconsultancynode3
+HostName 54.196.116.221
+User ubuntu
+IdentityFile /root/.ssh/ecoproject.pem
+
+touch ecoproject.pem
+
+vim ecoproject.pem
+
+pbcopy < ~/Downloads/ecoproject.pem
+
+realpath ecoproject.pem
+
+chmod 600 /home/ubuntu/.ssh/ecoproject.pem
+
+cd ~
+
+ssh xexconsultancynode2
+
+ssh xexconsultancynode3
+
+
+sudo hostnamectl set-hostname xexconsultancynode2
+sudo hostnamectl set-hostname xexconsultancynode3
+sudo hostnamectl set-hostname xexconsultancymanager
+sudo reboot
+
+sudo docker node ls
